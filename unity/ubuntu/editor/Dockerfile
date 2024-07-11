@@ -40,7 +40,7 @@ FROM $baseImage
 
 # Always put "Editor" and "modules.json" directly in $UNITY_PATH
 ARG version="2022.3.37f1"
-ARG module="windows-mono"
+ARG module="linux-il2cpp"
 COPY --from=builder /opt/unity/editors/$version/ "$UNITY_PATH/"
 
 # Add a file containing the version for this build
