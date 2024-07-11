@@ -13,7 +13,7 @@ ARG changeSet
 RUN unity-hub install --version "$version" --changeset "$changeSet" | tee /var/log/install-editor.log && grep 'Failed to install\|Error while installing an editor\|Completed with errors' /var/log/install-editor.log | exit $(wc -l)
 
 # Install modules for that editor
-ARG module="windows-mono"
+ARG module="linux-il2cpp"
 RUN for mod in $module; do \
       if [ "$mod" = "base" ] ; then \
         echo "running default modules for this baseOs"; \
