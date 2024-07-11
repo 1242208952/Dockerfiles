@@ -8,12 +8,12 @@ ARG baseImage="unityci/base"
 FROM $hubImage AS builder
 
 # Install editor
-ARG version
+ARG version="2022.3.37f1"
 ARG changeSet
 RUN unity-hub install --version "$version" --changeset "$changeSet" | tee /var/log/install-editor.log && grep 'Failed to install\|Error while installing an editor\|Completed with errors' /var/log/install-editor.log | exit $(wc -l)
 
 # Install modules for that editor
-ARG module="non-existent-module"
+ARG module="windows-mono"
 RUN for mod in $module; do \
       if [ "$mod" = "base" ] ; then \
         echo "running default modules for this baseOs"; \
@@ -39,8 +39,8 @@ RUN echo "$version-$module" | grep -q -vP '^(2021.2.(?![0-4](?![0-9]))|2021.[3-9
 FROM $baseImage
 
 # Always put "Editor" and "modules.json" directly in $UNITY_PATH
-ARG version
-ARG module
+ARG version="2022.3.37f1"
+ARG module="windows-mono"
 COPY --from=builder /opt/unity/editors/$version/ "$UNITY_PATH/"
 
 # Add a file containing the version for this build
